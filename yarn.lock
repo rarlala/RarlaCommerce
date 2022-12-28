@@ -71,6 +71,11 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
+"@corex/deepmerge@^4.0.29":
+  version "4.0.29"
+  resolved "https://registry.yarnpkg.com/@corex/deepmerge/-/deepmerge-4.0.29.tgz#af9debf07d7f6b0d2a9d04a266abf2c1418ed2f6"
+  integrity sha512-q/yVUnqckA8Do+EvAfpy7RLdumnBy9ZsducMUtZTvpdbJC7azEf1hGtnYYxm0QfphYxjwggv6XtH64prvS1W+A==
+
 "@emotion/babel-plugin@^11.10.5":
   version "11.10.5"
   resolved "https://registry.yarnpkg.com/@emotion/babel-plugin/-/babel-plugin-11.10.5.tgz#65fa6e1790ddc9e23cc22658a4c5dea423c55c3c"
@@ -1968,7 +1973,7 @@ minimatch@^3.0.4, minimatch@^3.0.5, minimatch@^3.1.1, minimatch@^3.1.2:
   dependencies:
     brace-expansion "^1.1.7"
 
-minimist@^1.2.0, minimist@^1.2.6:
+minimist@^1.2.0, minimist@^1.2.6, minimist@^1.2.7:
   version "1.2.7"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.7.tgz#daa1c4d91f507390437c6a8bc01078e7000c4d18"
   integrity sha512-bzfL1YUZsP41gmu/qjrEk0Q6i2ix/cVeAhbCbqH9u3zYutS1cLg00qhrD0M2MVdCcx4Sc0UpP2eBWo9rotpq6g==
@@ -1997,6 +2002,14 @@ natural-compare@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==
+
+next-sitemap@^3.1.43:
+  version "3.1.43"
+  resolved "https://registry.yarnpkg.com/next-sitemap/-/next-sitemap-3.1.43.tgz#f29ce7de7a7ea5cce95b36512cf06b8d30606abf"
+  integrity sha512-TshDAP69OjHwvszedQ/jBvOjzqy7Gm9NU3ZIP30X3e1qXsNVOVF5uzi9kQOI6v0uBG08QUOk9wKNSIk3zI/wjQ==
+  dependencies:
+    "@corex/deepmerge" "^4.0.29"
+    minimist "^1.2.7"
 
 next@13.1.1:
   version "13.1.1"
@@ -2051,6 +2064,11 @@ npm-run-path@^5.1.0:
   integrity sha512-sJOdmRGrY2sjNTRMbSvluQqg+8X7ZK61yvzBEIDhz4f8z1TZFYABsqjjCBd/0PUNE9M6QDgHJXQkGUEm7Q+l9Q==
   dependencies:
     path-key "^4.0.0"
+
+nuka-carousel@^5.4.1:
+  version "5.4.1"
+  resolved "https://registry.yarnpkg.com/nuka-carousel/-/nuka-carousel-5.4.1.tgz#a25044131e34d5b3db881c7c98a55b5e4cc49d60"
+  integrity sha512-pdF8FrlUxmHrv5luEK5lGTnpxTzIX34hVKJ/S/Ywi1YOtCDhjL1dFJnuBmJ6yHn29jU/xwnsWszKVluZbstaaQ==
 
 object-assign@^4.1.1:
   version "4.1.1"
