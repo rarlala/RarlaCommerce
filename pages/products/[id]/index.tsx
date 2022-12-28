@@ -1,7 +1,9 @@
-// import Head from "next/head";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import Carousel from "nuka-carousel";
-import { useState } from "react";
+import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
+import CustomEditor from "@components/Editor";
 
 const images = [
   {
@@ -13,36 +15,52 @@ const images = [
     thumbnail: "https://picsum.photos/id/1016/250/150/",
   },
   {
-    original: "https://picsum.photos/id/1020/1000/600/",
-    thumbnail: "https://picsum.photos/id/1020/250/150/",
-  },
-  {
     original: "https://picsum.photos/id/1018/1000/600/",
     thumbnail: "https://picsum.photos/id/1018/250/150/",
   },
   {
-    original: "https://picsum.photos/id/1015/1000/600/",
-    thumbnail: "https://picsum.photos/id/1015/250/150/",
-  },
-  {
     original: "https://picsum.photos/id/1019/1000/600/",
     thumbnail: "https://picsum.photos/id/1019/250/150/",
+  },
+  {
+    original: "https://picsum.photos/id/1020/1000/600/",
+    thumbnail: "https://picsum.photos/id/1020/250/150/",
+  },
+  {
+    original: "https://picsum.photos/id/1021/1000/600/",
+    thumbnail: "https://picsum.photos/id/1021/250/150/",
   },
 ];
 
 export default function Products() {
   const [imageIdx, setImageIdx] = useState<number>(0);
 
+  const router = useRouter();
+  const { id: productId } = router.query;
+  const [editorState, setEditorState] = useState<EditorState | undefined>(
+    undefined
+  );
+
+  useEffect(() => {
+    if (productId != null) {
+      fetch(`/api/get-product?id=${productId}`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.items.contents) {
+            setEditorState(
+              EditorState.createWithContent(
+                convertFromRaw(JSON.parse(data.items.contents))
+              )
+            );
+          } else {
+            setEditorState(EditorState.createEmpty());
+          }
+        });
+    }
+  }, [productId]);
+
   return (
     <>
-      {/* TODO: SEO를 위한 og 설정 */}
-      {/* <Head>
-        <meta property="og:url" content="product url" />
-        <meta property="og:type" content="product" />
-        <meta property="og:title" content="product title" />
-        <meta property="og:description" content="product desc" />
-        <meta property="og:image" content="product image" />
-      </Head> */}
       <Carousel
         autoplay
         autoplayInterval={2000}
@@ -73,6 +91,9 @@ export default function Products() {
           </li>
         ))}
       </ul>
+      {editorState != null && (
+        <CustomEditor readonly editorState={editorState} />
+      )}
     </>
   );
 }
