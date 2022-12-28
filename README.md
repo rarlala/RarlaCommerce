@@ -8,6 +8,9 @@
 - Typescript
 - tailwindCSS
 - emotion
+- library
+  - nuka-carousel
+  - react-draft-wysiwyg
 
 ### Back-end
 
@@ -15,11 +18,11 @@
 - planetScale
 - prisma
 
-## CI-CD
+### CI-CD
 
 - husky
 
-## ETC
+### ETC
 
 - prettier, eslint
 
