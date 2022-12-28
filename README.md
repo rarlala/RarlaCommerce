@@ -4,6 +4,9 @@
 
 - Next.js
 - Typescript
+- prettier, eslint
+- husky
+- notionAPI
 
 ## 실행 방법
 
