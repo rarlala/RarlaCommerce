@@ -6,6 +6,8 @@
 
 - Next.js
 - Typescript
+- tailwindCSS
+- emotion
 
 ### Back-end
 
