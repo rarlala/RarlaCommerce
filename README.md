@@ -2,11 +2,24 @@
 
 ## 기술 스택
 
+### Front-end
+
 - Next.js
 - Typescript
-- prettier, eslint
-- husky
+
+### Back-end
+
 - notionAPI
+- planetScale
+- prisma
+
+## CI-CD
+
+- husky
+
+## ETC
+
+- prettier, eslint
 
 ## 실행 방법
 
