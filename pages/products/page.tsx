@@ -5,13 +5,11 @@ import { Input, Pagination, SegmentedControl, Select } from "@mantine/core";
 import { IconSearch } from "@tabler/icons";
 import { CATEGORY_MAP, ORDER_BY, TAKE } from "constants/products";
 import useDebounce from "hooks/useDebounce";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Products() {
   const [activePage, setPage] = useState(1);
-  const [total, setTotal] = useState(0);
-  const [categories, setCategories] = useState<categories[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string>("-1");
-  const [products, setProducts] = useState<products[]>([]);
   const [selectedOrderBy, setOrderBy] = useState<string | null>(
     ORDER_BY[0].value
   );
@@ -19,28 +17,50 @@ export default function Products() {
 
   const debounceKeyword = useDebounce<string>(keyword);
 
-  useEffect(() => {
-    fetch(`/api/get-categories`)
-      .then((res) => res.json())
-      .then((data) => setCategories(data.items));
-  }, []);
+  const { data: categories } = useQuery<
+    { items: categories[] },
+    unknown,
+    categories[]
+  >(
+    [`/api/get-categories`],
+    () => fetch(`/api/get-categories`).then((res) => res.json()),
+    {
+      select: (data) => data.items,
+    }
+  );
 
-  useEffect(() => {
-    fetch(
-      `/api/get-products-count?category=${selectedCategories}&contains=${debounceKeyword}`
-    )
-      .then((res) => res.json())
-      .then((data) => setTotal(Math.ceil(data.items / TAKE)));
-  }, [selectedCategories, debounceKeyword]);
+  const { data: total } = useQuery(
+    [
+      `/api/get-products-count?category=${selectedCategories}&contains=${debounceKeyword}`,
+    ],
+    () =>
+      fetch(
+        `/api/get-products-count?category=${selectedCategories}&contains=${debounceKeyword}`
+      )
+        .then((res) => res.json())
+        .then((data) => Math.ceil(data.items / TAKE))
+  );
 
-  useEffect(() => {
-    const skip = TAKE * (activePage - 1);
-    fetch(
-      `/api/get-products?skip=${skip}&take=${TAKE}&category=${selectedCategories}&orderBy=${selectedOrderBy}}&contains=${debounceKeyword}`
-    )
-      .then((res) => res.json())
-      .then((data) => setProducts(data.items));
-  }, [activePage, selectedCategories, selectedOrderBy, debounceKeyword]);
+  const { data: products } = useQuery<
+    { items: products[] },
+    unknown,
+    products[]
+  >(
+    [
+      `/api/get-products?skip=${
+        TAKE * (activePage - 1)
+      }&take=${TAKE}&category=${selectedCategories}&orderBy=${selectedOrderBy}}&contains=${debounceKeyword}`,
+    ],
+    () =>
+      fetch(
+        `/api/get-products?skip=${
+          TAKE * (activePage - 1)
+        }&take=${TAKE}&category=${selectedCategories}&orderBy=${selectedOrderBy}}&contains=${debounceKeyword}`
+      ).then((res) => res.json()),
+    {
+      select: (data) => data.items,
+    }
+  );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);
@@ -73,7 +93,7 @@ export default function Products() {
           />
         </div>
       )}
-      {!products.length && (
+      {!products && (
         <div className="w-full text-center mt-20">
           {debounceKeyword
             ? "검색 결과가 없습니다"
@@ -107,12 +127,14 @@ export default function Products() {
         </div>
       )}
       <div className="w-full flex mt-5">
-        <Pagination
-          className="m-auto"
-          page={activePage}
-          onChange={setPage}
-          total={total}
-        />
+        {total && (
+          <Pagination
+            className="m-auto"
+            page={activePage}
+            onChange={setPage}
+            total={total}
+          />
+        )}
       </div>
     </div>
   );
