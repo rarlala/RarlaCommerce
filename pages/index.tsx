@@ -4,10 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import { css } from "@emotion/react";
 import Button from "@components/Button";
 import styles from "../styles/Home.module.css";
+import { useSession } from "next-auth/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const { data: session } = useSession();
+
   const [products, setProducts] = useState<
     {
       id: string;
@@ -47,6 +50,7 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <h1>Rarla Commerce</h1>
+        {session && <h2>안녕하세요 {session.user?.name}님</h2>}
         <div>
           <h2>Add items</h2>
           <input
