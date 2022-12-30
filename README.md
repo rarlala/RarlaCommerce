@@ -6,11 +6,13 @@
 
 - Next.js
 - Typescript
+- react-query
 - tailwindCSS
 - emotion
 - library
   - nuka-carousel
   - react-draft-wysiwyg
+  - mantine
 
 ### Back-end
 
@@ -25,6 +27,8 @@
 ### ETC
 
 - prettier, eslint
+- google oAuth
+- jwt
 
 ## 실행 방법
 
