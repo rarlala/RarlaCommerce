@@ -6,8 +6,10 @@ import { IconSearch } from "@tabler/icons";
 import { CATEGORY_MAP, ORDER_BY, TAKE } from "constants/products";
 import useDebounce from "hooks/useDebounce";
 import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/router";
 
 export default function Products() {
+  const router = useRouter();
   const [activePage, setPage] = useState(1);
   const [selectedCategories, setSelectedCategories] = useState<string>("-1");
   const [selectedOrderBy, setOrderBy] = useState<string | null>(
@@ -103,7 +105,11 @@ export default function Products() {
       {products && (
         <div className="grid grid-cols-3 gap-5">
           {products.map((item) => (
-            <div key={item.id} className="max-w-300">
+            <div
+              key={item.id}
+              className="max-w-300"
+              onClick={() => router.push(`/products/${item.id}`)}
+            >
               <Image
                 className="rounded m-auto"
                 src={item.image_url ?? ""}
