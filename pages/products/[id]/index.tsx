@@ -8,7 +8,7 @@ import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
 import CustomEditor from "@components/Editor";
 import { format } from "date-fns";
 import { CATEGORY_MAP } from "constants/products";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@mantine/core";
 import { IconHeart, IconHeartbeat } from "@tabler/icons";
 import { useSession } from "next-auth/react";
@@ -33,6 +33,7 @@ export default function Products(props: {
   const { data: session } = useSession();
 
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { id: productId } = router.query;
   const [editorState, setEditorState] = useState<EditorState | undefined>(() =>
     props.product.contents
@@ -50,7 +51,7 @@ export default function Products(props: {
       .then((data) => data.items)
   );
 
-  const { mutate, data } = useMutation(
+  const { mutate } = useMutation<unknown, unknown, string, any>(
     (productId) =>
       fetch("/api/update-wishlist", {
         method: "POST",
@@ -59,13 +60,33 @@ export default function Products(props: {
         .then((res) => res.json())
         .then((data) => data.items),
     {
-      onMutate: async (productId) => {},
+      onMutate: async (productId) => {
+        queryClient.cancelQueries([WISHLIST_QUERY_KEY]);
+        const previous = queryClient.getQueryData([WISHLIST_QUERY_KEY]);
+        queryClient.setQueryData<string[]>([WISHLIST_QUERY_KEY], (old) =>
+          old
+            ? old.includes(String(productId))
+              ? old.filter((id) => id !== String(productId))
+              : old.concat(String(productId))
+            : []
+        );
+        return { previous };
+      },
+      onSuccess: async () => {
+        queryClient.invalidateQueries([WISHLIST_QUERY_KEY]);
+      },
+      onError: (error, _, context) => {
+        queryClient.setQueriesData([WISHLIST_QUERY_KEY], context.previous);
+      },
     }
   );
 
   const product = props.product;
 
-  const isWished = wishlist ? wishlist.includes(productId) : false;
+  const isWished =
+    wishlist != null && productId != null
+      ? wishlist.includes(productId)
+      : false;
 
   return (
     <>
@@ -112,13 +133,13 @@ export default function Products(props: {
             <div className="text-lg">
               {product.price.toLocaleString("ko-kr")}원
             </div>
-            <div>{wishlist}</div>
             <Button
+              disabled={wishlist == null}
               leftIcon={
                 isWished ? (
-                  <IconHeartbeat size={20} stroke={1.5} />
-                ) : (
                   <IconHeart size={20} stroke={1.5} />
+                ) : (
+                  <IconHeartbeat size={20} stroke={1.5} />
                 )
               }
               style={{ backgroundColor: isWished ? "red" : "grey" }}

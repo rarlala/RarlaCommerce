@@ -59,7 +59,7 @@ export default async function handler(
       res.status(200).json({ items: [], message: "no Session" });
       return;
     }
-    const wishlist = await updateWishlist(String(session.id));
+    const wishlist = await updateWishlist(String(session.id), productId);
     res.status(200).json({ items: wishlist, message: `Success` });
   } catch (e) {
     res.status(200).json({ message: `Failed` });
