@@ -11,6 +11,7 @@ const nextConfig = {
       "www.bobbies.com",
       "cdn.shopify.com",
       "m.media-amazon.com",
+      "lh3.googleusercontent.com",
     ],
   },
 };
