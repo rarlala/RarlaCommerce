@@ -167,7 +167,7 @@ export default function Products(props: {
                 장바구니
               </Button>
               <Button
-                disabled={wishlist == null}
+                disabled={isWished == null}
                 leftIcon={
                   isWished ? (
                     <IconHeart size={20} stroke={1.5} />
