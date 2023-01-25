@@ -1,6 +1,6 @@
 import { categories, products } from "@prisma/client";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Input, Pagination, SegmentedControl, Select } from "@mantine/core";
 import { IconSearch } from "@tabler/icons";
 import { CATEGORY_MAP, ORDER_BY, TAKE } from "constants/products";
