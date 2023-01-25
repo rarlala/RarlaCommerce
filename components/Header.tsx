@@ -23,7 +23,7 @@ export default function Header() {
             height={30}
             style={{ borderRadius: "50%" }}
             alt="profile"
-            onClick={() => router.push("/my-page")}
+            onClick={() => router.push("/my")}
           />
         ) : (
           <IconUser onClick={() => router.push("/auth/login")} />
