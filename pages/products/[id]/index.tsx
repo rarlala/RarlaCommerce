@@ -1,10 +1,10 @@
-import { GetServerSideProps } from "next";
+import { GetServerSidePropsContext } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Cart, OrderItem, products } from "@prisma/client";
 import Carousel from "nuka-carousel";
-import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
+import { EditorState, convertFromRaw } from "draft-js";
 import CustomEditor from "@components/Editor";
 import { format } from "date-fns";
 import { CATEGORY_MAP } from "constants/products";
@@ -16,7 +16,7 @@ import { CountControl } from "@components/CountControl";
 import { CART_QUERY_KEY } from "pages/cart";
 import { ORDER_QUERY_KEY } from "pages/my";
 
-export async function getServerSideProps(context: GetServerSideProps) {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
   const product = await fetch(
     `http://localhost:3000/api/get-product?id=${context.params?.id}`
   )

@@ -1,9 +1,8 @@
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
-import { CLIENT_ID } from "constants/googleAuth";
 
 export default function Google() {
   return (
-    <GoogleOAuthProvider clientId={CLIENT_ID}>
+    <GoogleOAuthProvider clientId={String(process.env.NEXT_PUBLIC_CLIENT_ID)}>
       <div className="w-full h-300">
         <GoogleLogin
           onSuccess={({ credential }) => {
