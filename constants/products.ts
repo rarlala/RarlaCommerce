@@ -7,7 +7,6 @@ export const ORDER_BY = [
 ];
 
 export const getOrderBy = (orderBy?: string) => {
-  console.log(123, orderBy);
   return orderBy
     ? orderBy === "latest"
       ? { orderBy: { createdAt: "desc" } }
