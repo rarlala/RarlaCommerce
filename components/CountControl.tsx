@@ -19,10 +19,7 @@ export function CountControl({ value, setValue }: CountControlInputProps) {
       <ActionIcon
         size={42}
         variant="default"
-        onClick={() => {
-          console.log(handlers.current);
-          handlers?.current?.decrement();
-        }}
+        onClick={() => handlers?.current?.decrement()}
       >
         –
       </ActionIcon>
@@ -34,17 +31,14 @@ export function CountControl({ value, setValue }: CountControlInputProps) {
         handlersRef={handlers}
         max={10}
         min={0}
-        step={2}
+        step={1}
         styles={{ input: { width: 54, textAlign: "center" } }}
       />
 
       <ActionIcon
         size={42}
         variant="default"
-        onClick={() => {
-          console.log(handlers.current);
-          handlers?.current?.increment();
-        }}
+        onClick={() => handlers?.current?.increment()}
       >
         +
       </ActionIcon>

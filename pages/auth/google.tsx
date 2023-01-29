@@ -11,7 +11,7 @@ export default function Google() {
               .then((data) => console.log(data));
           }}
           onError={() => {
-            console.log("Login Failed");
+            console.error("Login Failed");
           }}
         />
       </div>

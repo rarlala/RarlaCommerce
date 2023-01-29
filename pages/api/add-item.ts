@@ -21,7 +21,6 @@ async function addItem(name: string) {
         ],
       },
     });
-    console.log(response);
   } catch (error) {
     console.error(JSON.stringify(error));
   }

@@ -51,13 +51,13 @@ export default function Home() {
     [
       `/api/get-products?skip=${
         TAKE * (activePage - 1)
-      }&take=${TAKE}&category=${selectedCategories}&orderBy=${selectedOrderBy}}&contains=${debounceKeyword}`,
+      }&take=${TAKE}&category=${selectedCategories}&orderBy=${selectedOrderBy}&contains=${debounceKeyword}`,
     ],
     () =>
       fetch(
         `/api/get-products?skip=${
           TAKE * (activePage - 1)
-        }&take=${TAKE}&category=${selectedCategories}&orderBy=${selectedOrderBy}}&contains=${debounceKeyword}`
+        }&take=${TAKE}&category=${selectedCategories}&orderBy=${selectedOrderBy}&contains=${debounceKeyword}`
       ).then((res) => res.json()),
     {
       select: (data) => data.items,
